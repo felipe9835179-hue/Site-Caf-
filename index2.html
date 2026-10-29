@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Financeira - Produtor de Café</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>☕ AgroVision</h1>
+            <p>Controle de Gastos, Despesas, Sacas e Lucros da Safra</p>
+        </header>
+
+        <!-- Cards Resumo -->
+        <div class="cards">
+            <div class="card receita">
+                <h3>Total de Receitas (Vendas)</h3>
+                <div class="valor" id="totalReceita">R$ 0,00</div>
+            </div>
+            <div class="card despesa">
+                <h3>Total de Despesas (Custos)</h3>
+                <div class="valor" id="totalDespesa">R$ 0,00</div>
+            </div>
+            <div class="card">
+                <h3>Lucro Líquido (Saldo)</h3>
+                <div class="valor" id="totalSaldo">R$ 0,00</div>
+            </div>
+        </div>
+
+        <!-- Cards Resumo -->
+        <div class="cards">
+            <!-- (seus cards de receita, despesa e saldo) -->
+        </div>
+
+        <!-- Resumo Visual de Gastos por Categoria -->
+        <div class="panel" style="margin-bottom: 30px;">
+            <h2>📊 Resumo de Despesas por Categoria</h2>
+            <div id="graficoCategorias" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+                <!-- As barras entram aqui via JS -->
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <!-- (suas colunas de formulários e tabelas) -->
+        </div>
+
+        <div class="grid-layout">
+            <!-- Coluna Esquerda: Formulários -->
+            <div class="panel-coluna">
+                <!-- Formulário de Lançamento Financeiro -->
+                <div class="panel">
+                    <h2>Novo Lançamento</h2>
+                    <form id="formTransacao">
+                        <div class="form-group">
+                            <label for="descricao">Descrição (Ex: Adubo, Venda de Sacas)</label>
+                            <input type="text" id="descricao" required placeholder="Ex: Adubo NPK 20-05-20">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <select id="tipo">
+                                <option value="receita">Receita (Entrada)</option>
+                                <option value="despesa" selected>Despesa (Gasto)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria">
+                                <option value="Adubação/Insumos">Adubação / Insumos</option>
+                                <option value="Mão de Obra/Colheita">Mão de Obra / Colheita</option>
+                                <option value="Manutenção de Maquinário">Manutenção de Maquinário</option>
+                                <option value="Venda de Café">Venda de Café</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="valor">Valor (R$)</label>
+                            <input type="number" id="valor" step="0.01" required placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" required>
+                        </div>
+
+                        <button type="submit">Adicionar Registro</button>
+                    </form>
+                </div>
+
+                <!-- Novo: Formulário de Controle de Sacas -->
+                <div class="panel" style="margin-top: 20px;">
+                    <h2>Controle de Sacas e Preço</h2>
+                    <form id="formSacas">
+                        <div class="form-group">
+                            <label for="safraLote">Lote / Safra (Ex: Safra 2026)</label>
+                            <input type="text" id="safraLote" required placeholder="Ex: Arábica - Talhão 01">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="qtdSacas">Quantidade de Sacas (60kg)</label>
+                            <input type="number" id="qtdSacas" min="1" required placeholder="Ex: 150">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="precoSaca">Preço de Venda por Saca (R$)</label>
+                            <input type="number" id="precoSaca" step="0.01" required placeholder="Ex: 950.00">
+                        </div>
+
+                        <button type="submit" class="btn-secundario">Salvar Lote de Sacas</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Coluna Direita: Tabelas -->
+            <div class="panel-coluna">
+                <!-- Novo: Tabela de Sacas -->
+                <div class="panel" style="margin-bottom: 20px;">
+                    <h2>Lotes de Sacas e Preços Estimados</h2>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Lote / Safra</th>
+                                    <th>Sacas</th>
+                                    <th>Preço/Saca</th>
+                                    <th>Total Estimado</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaSacas">
+                                <!-- Os dados de sacas entram aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tabela de Histórico Financeiro -->
+                <div class="panel">
+                    <h2>Histórico de Movimentações</h2>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Categoria</th>
+                                    <th>Valor</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaTransacoes">
+                                <!-- Os dados financeiros entram aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script2.js"></script>
+</body>
+</html>
